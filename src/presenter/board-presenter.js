@@ -7,7 +7,7 @@ import ListView from '../view/list-view';
 export default class BoardPresenter {
   listView = new ListView();
 
-  init = (boardContainer) => {
+  init(boardContainer) {
     this.boardContainer = boardContainer;
     render(this.listView, this.boardContainer);
     render(new FormPointView(), this.listView.getElement());
@@ -15,5 +15,5 @@ export default class BoardPresenter {
     for (let i = 0; i < 3; i++) {
       render(new PointTripView(), this.listView.getElement());
     }
-  };
+  }
 }
