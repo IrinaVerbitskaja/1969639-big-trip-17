@@ -7,13 +7,16 @@ import ListView from '../view/list-view';
 export default class BoardPresenter {
   listView = new ListView();
 
-  init(boardContainer) {
+  init(boardContainer, pointModel) {
     this.boardContainer = boardContainer;
+    this.pointModel = pointModel;
+    this.boardPoint = [...this.pointModel.getPoint()];
+
     render(this.listView, this.boardContainer);
     render(new FormPointView(), this.listView.getElement());
 
     for (let i = 0; i < 3; i++) {
-      render(new PointTripView(), this.listView.getElement());
+      render(new PointTripView(this.boardPoint[i]), this.listView.getElement());
     }
   }
 }
