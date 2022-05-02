@@ -2,6 +2,8 @@ import {render} from '../render';
 import FormPointView from '../view/add-point-view';
 import PointTripView from '../view/point-trip-view';
 import ListView from '../view/list-view';
+import NewOfferView from '../view/point-offers-view';
+//import {offers} from '../mock/point';
 
 
 export default class BoardPresenter {
@@ -16,7 +18,10 @@ export default class BoardPresenter {
     render(new FormPointView(), this.listView.getElement());
 
     for (let i = 0; i < 3; i++) {
-      render(new PointTripView(this.boardPoint[i]), this.listView.getElement());
+      console.log(this.boardPoint[i]);
+      const pointTripView = new PointTripView(this.boardPoint[i]);
+      render(pointTripView, this.listView.getElement());
+      render (new NewOfferView(), pointTripView.getElement().querySelector('.event__selected-offers'));
     }
   }
 }
