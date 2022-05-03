@@ -3,7 +3,7 @@ import FormPointView from '../view/add-point-view';
 import PointTripView from '../view/point-trip-view';
 import ListView from '../view/list-view';
 import NewOfferView from '../view/point-offers-view';
-//import {offers} from '../mock/point';
+import {offers} from '../mock/point';
 
 
 export default class BoardPresenter {
@@ -21,7 +21,13 @@ export default class BoardPresenter {
       console.log(this.boardPoint[i]);
       const pointTripView = new PointTripView(this.boardPoint[i]);
       render(pointTripView, this.listView.getElement());
-      render (new NewOfferView(), pointTripView.getElement().querySelector('.event__selected-offers'));
+      for (let j = 0; j < offers.length; j++) {
+        if (offers[j].id === this.boardPoint[i].id) {
+          render (new NewOfferView(offers[j]), pointTripView.getElement().querySelector('.event__selected-offers'));
+        }
+
+      }
+      //render (new NewOfferView(), pointTripView.getElement().querySelector('.event__selected-offers'));
     }
   }
 }
