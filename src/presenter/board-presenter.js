@@ -15,7 +15,7 @@ export default class BoardPresenter {
     this.boardPoint = [...this.pointModel.getPoint()];
 
     render(this.listView, this.boardContainer);
-    render(new FormPointView(), this.listView.getElement());
+    render(new FormPointView(this.boardPoint[0]), this.listView.getElement());
 
     for (let i = 0; i < 3; i++) {
       console.log(this.boardPoint[i]);
@@ -25,9 +25,7 @@ export default class BoardPresenter {
         if (offers[j].id === this.boardPoint[i].id) {
           render (new NewOfferView(offers[j]), pointTripView.getElement().querySelector('.event__selected-offers'));
         }
-
       }
-      //render (new NewOfferView(), pointTripView.getElement().querySelector('.event__selected-offers'));
     }
   }
 }

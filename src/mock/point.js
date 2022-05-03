@@ -20,11 +20,11 @@ const generateOfferType = () => {
 
 const destination = {
   description: generateDescription(),
-  name: 'Chamonix',
+  name: 'Chmonix',
   pictures: [
     {
-      'src': `http://picsum.photos/300/200?r=${getRandomInteger(0, 10)}`,
-      'description': generateDescription()
+      src: `http://picsum.photos/300/200?r=${getRandomInteger(0, 10)}`,
+      description: generateDescription()
     }
   ]
 };
@@ -56,3 +56,4 @@ const generatePoint = () => ({
 });
 
 export {generatePoint, offers};
+
