@@ -29,7 +29,7 @@ const destination = {
   ]
 };
 
-const offers = [
+/*const offers = [
   {
     id: 1,
     title: 'Upgrade to a business class',
@@ -39,20 +39,46 @@ const offers = [
     title: 'Choose the radio station',
     price: 60
   }
+];*/
+const offers = [
+  {
+    type: 'taxi',
+    offers: [
+      {
+        id: 1,
+        title: 'Upgrade to a business class',
+        price: 120
+      }, {
+        id: 2,
+        title: 'Choose the radio station',
+        price: 60
+      } ]
+  },
+  {
+    type: 'flight',
+    offers: [
+      {
+        id: 1,
+        title: 'Upgrade to a business class',
+        price: 120
+      }, {
+        id: 2,
+        title: 'Choose the radio station',
+        price: 60
+      } ]
+  },
 ];
 
 const generatePoint = () => ({
-  basePrice: 222,
+  basePrice: getRandomInteger(0, 300),
   dateFrom: '2019-07-10T22:55:56.845Z',
   dateTo: '2019-07-11T11:22:13.375Z',
   destination: destination,
   id: 1,
   isFavorite: false,
-  offers: {
-    type: generateOfferType(),
-    offers: [1, 2],
-  },
-  type: generateOfferType(),
+  offers: [1, 2],
+  type:'taxi',
+  //generateOfferType(),
 });
 
 export {generatePoint, offers};
