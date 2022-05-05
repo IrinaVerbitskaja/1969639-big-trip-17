@@ -69,6 +69,7 @@ const offers = [
   },
 ];
 
+
 const generatePoint = () => ({
   basePrice: getRandomInteger(0, 300),
   dateFrom: '2019-07-10T22:55:56.845Z',

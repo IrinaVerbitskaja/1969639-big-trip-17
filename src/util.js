@@ -4,7 +4,7 @@ const humanizeData = (pointData) => dayjs(pointData).format('MMM D');
 const humanizeClassData = (pointData) => dayjs(pointData).format('YYYY-MM-DDTHH:mm');
 const humanizeTime = (pointData) => dayjs(pointData).format('HH:mm');
 const humanizeDataFromClass = (pointData) => dayjs(pointData).format('YYYY-MM-DD');
-const humanizeDifference = (date1, date2) => dayjs(date2).diff(dayjs(date1), 'minute');
+const humanizeDifference = (date1, date2) => dayjs(date2).diff(dayjs(date1), 'minute');//dayjs.duration(dayjs(date1).diff(dayjs(date2)));
 const humanizeDateAddPoint = (pointData) => dayjs(pointData).format('DD/MM/YYhh:mm');
 
 const getRandomInteger = (a = 0, b = 1) => {
