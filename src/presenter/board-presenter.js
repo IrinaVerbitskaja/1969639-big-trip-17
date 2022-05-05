@@ -27,9 +27,11 @@ export default class BoardPresenter {
       const pointTripView = new PointTripView(this.boardPoint[i]);
       const pointTypeOffer = offers.find((offer) => offer.type === this.boardPoint[i].type);
       render(pointTripView, this.listView.getElement());
-      for (let j = 0; j < pointTypeOffer.offers.length; j++) {
-        if (this.boardPoint[i].offers.includes(pointTypeOffer.offers[j].id)) {
-          render (new NewOfferView(pointTypeOffer.offers[j]), pointTripView.getElement().querySelector('.event__selected-offers'));
+      if (pointTypeOffer) {
+        for (let j = 0; j < pointTypeOffer.offers.length; j++) {
+          if (this.boardPoint[i].offers.includes(pointTypeOffer.offers[j].id)) {
+            render (new NewOfferView(pointTypeOffer.offers[j]), pointTripView.getElement().querySelector('.event__selected-offers'));
+          }
         }
       }
     }

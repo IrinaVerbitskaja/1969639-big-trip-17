@@ -42,20 +42,20 @@ const destination = {
 ];*/
 const offers = [
   {
-    type: 'taxi',
+    type: generateOfferType(),
     offers: [
       {
         id: 1,
         title: 'Upgrade to a business class',
-        price: 120
+        price: 125
       }, {
         id: 2,
         title: 'Choose the radio station',
-        price: 60
+        price: 65
       } ]
   },
   {
-    type: 'flight',
+    type: generateOfferType(),
     offers: [
       {
         id: 1,
@@ -77,7 +77,7 @@ const generatePoint = () => ({
   id: 1,
   isFavorite: false,
   offers: [1, 2],
-  type:'taxi',
+  type:generateOfferType(),
   //generateOfferType(),
 });
 
