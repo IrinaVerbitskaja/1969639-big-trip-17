@@ -1,5 +1,7 @@
 import {createElement} from '../render';
+import {offers} from '../mock/point';
 import {humanizeData, humanizeClassData, humanizeTime, humanizeDataFromClass, humanizeDifference} from '../util';
+
 
 const createPointTripTemlate = (point) => {
   const {basePrice, dateFrom, dateTo, type} = point;
@@ -10,6 +12,18 @@ const createPointTripTemlate = (point) => {
   const humanDataClassTo = humanizeClassData(dateTo);
   const humanTimeTo = humanizeTime(dateTo);
   const differenceDate = humanizeDifference(dateFrom, dateTo);
+
+  const pointTypeOffer = offers.find((offer) => offer.type === type);
+  let pointOffer = [];
+  if (pointTypeOffer) {
+    pointOffer = pointTypeOffer.offers.map((typeOffer) =>
+      point.offers.includes(pointTypeOffer.offers.id) ?
+        `<li class="event__offer">
+            <span class="event__offer-title">${typeOffer.title}</span>
+            &plus;&euro;&nbsp;
+            <span class="event__offer-price">${typeOffer.price}</span>
+         </li>` : '');
+    pointOffer.join('');}
 
   return (
     `<li class="trip-events__item">
@@ -32,7 +46,7 @@ const createPointTripTemlate = (point) => {
           </p>
           <h4 class="visually-hidden">Offers:</h4>
                 <ul class="event__selected-offers">
-
+                ${pointOffer}
                 </ul>
                 <button class="event__favorite-btn event__favorite-btn--active" type="button">
                   <span class="visually-hidden">Add to favorite</span>
@@ -66,4 +80,3 @@ export default class PointTripView {
     this.element = null;
   }
 }
-

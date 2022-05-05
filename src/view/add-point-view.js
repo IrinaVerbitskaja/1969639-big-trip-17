@@ -8,6 +8,8 @@ const createFormPointTemlate = (point) => {
   const dateFromHum = dateFrom !== null ? humanizeDateAddPoint(dateFrom) : '';
   const dateToHum = dateTo !== null ? humanizeDateAddPoint(dateTo) : '';
 
+  const pictures = destination.pictures.map((photo) => `<img class="event__photo" src=${photo.src} alt=${photo.description}>`).join('');
+
   return (
     `<li class="trip-events__item">
     <form class="event event--edit" action="#" method="post">
@@ -85,10 +87,10 @@ const createFormPointTemlate = (point) => {
 
     <div class="event__field-group  event__field-group--time">
       <label class="visually-hidden" for="event-start-time-1">From</label>
-      <input class="event__input  event__input--time" id="event-start-time-1" type="text" name="event-start-time" value=${dateFromHum}>
+      <input class="event__input  event__input--time" id="event-start-time-1" type="text" name="event-start-time" value="${dateFromHum}">
       &mdash;
       <label class="visually-hidden" for="event-end-time-1">To</label>
-      <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time" value=${dateToHum}>
+      <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time" value="${dateToHum}">
     </div>
 
     <div class="event__field-group  event__field-group--price">
@@ -116,7 +118,7 @@ const createFormPointTemlate = (point) => {
 
       <div class="event__photos-container">
         <div class="event__photos-tape">
-
+         ${pictures}
         </div>
       </div>
      </section>
