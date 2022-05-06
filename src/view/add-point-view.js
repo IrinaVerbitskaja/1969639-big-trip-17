@@ -1,5 +1,6 @@
 import {createElement} from '../render.js';
 import {humanizeDateAddPoint} from '../util';
+import {offers} from '../mock/point.js';
 
 const createFormPointTemlate = (point) => {
   const {basePrice, destination, type, dateFrom, dateTo} = point;
@@ -9,6 +10,20 @@ const createFormPointTemlate = (point) => {
   const dateToHum = dateTo !== null ? humanizeDateAddPoint(dateTo) : '';
 
   const pictures = destination.pictures.map((photo) => `<img class="event__photo" src=${photo.src} alt=${photo.description}>`).join('');
+
+  const pointTypeOffer = offers.find((offer) => offer.type === type);
+  let pointAddOffer = [];
+  if (pointTypeOffer) {
+    pointAddOffer = pointTypeOffer.offers.map((typeOffer) => {
+      const checked = point.offers.includes(typeOffer.id) ? 'checked' : '';
+      return     `<div class="event__offer-selector">
+     <input class="event__offer-checkbox  visually-hidden" id="event-offer-comfort-1" type="checkbox" name="event-offer-comfort" ${checked}>
+       <label class="event__offer-label" for="event-offer-comfort-1">
+         <span class="event__offer-title">${typeOffer.title}</span>
+          &plus;&euro;&nbsp;
+         <span class="event__offer-price">${typeOffer.price}</span>
+     </label>
+   </div>`;}).join('');}
 
   return (
     `<li class="trip-events__item">
@@ -108,7 +123,7 @@ const createFormPointTemlate = (point) => {
     <section class="event__section  event__section--offers">
       <h3 class="event__section-title  event__section-title--offers">Offers</h3>
       <div class="event__available-offers">
-
+      ${pointAddOffer}
     </div>
   </section>
 

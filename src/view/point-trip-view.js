@@ -2,6 +2,8 @@ import {createElement} from '../render';
 import {offers} from '../mock/point';
 import {humanizeData, humanizeClassData, humanizeTime, humanizeDataFromClass, humanizeDifference} from '../util';
 
+const DIFF_SECOND = 60;
+const DIFF_HOUR = 3600;
 
 const createPointTripTemlate = (point) => {
   const {basePrice, dateFrom, dateTo, type} = point;
@@ -13,17 +15,27 @@ const createPointTripTemlate = (point) => {
   const humanTimeTo = humanizeTime(dateTo);
   const differenceDate = humanizeDifference(dateFrom, dateTo);
 
+  const diffHour = () => {
+    const hour = Math.round(differenceDate/DIFF_HOUR);
+    if ( hour > 0) {
+      const second = differenceDate - (hour * DIFF_HOUR);
+      const minute = Math.ceil(second / DIFF_SECOND);
+      return `${hour}H ${minute}M`;
+    } else {
+      const minute = Math.ceil(differenceDate / DIFF_SECOND);
+      return `${minute}M`;}
+  };
+
   const pointTypeOffer = offers.find((offer) => offer.type === type);
   let pointOffer = [];
   if (pointTypeOffer) {
     pointOffer = pointTypeOffer.offers.map((typeOffer) =>
-      point.offers.includes(pointTypeOffer.offers.id) ?
+      point.offers.includes(typeOffer.id) ?
         `<li class="event__offer">
             <span class="event__offer-title">${typeOffer.title}</span>
             &plus;&euro;&nbsp;
             <span class="event__offer-price">${typeOffer.price}</span>
-         </li>` : '');
-    pointOffer.join('');}
+         </li>`: '').join('');}
 
   return (
     `<li class="trip-events__item">
@@ -39,7 +51,7 @@ const createPointTripTemlate = (point) => {
             &mdash;
            <time class="event__end-time" datetime="${humanDataClassTo}">${humanTimeTo}</time>
           </p>
-          <p class="event__duration">${differenceDate}М</p>
+          <p class="event__duration">${diffHour()}</p>
         </div>
           <p class="event__price">
             &euro;&nbsp;<span class="event__price-value">${basePrice}</span>

@@ -68,7 +68,6 @@ const generatePoint = () => ({
   isFavorite: false,
   offers: [1, 2],
   type:generateOfferType(),
-  //generateOfferType(),
 });
 
 export {generatePoint, offers};
