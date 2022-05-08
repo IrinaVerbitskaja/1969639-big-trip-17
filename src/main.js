@@ -7,12 +7,14 @@ import PointModel from './model/point-model';
 const tripMain = document.querySelector('.trip-main');
 const filterElement = tripMain.querySelector('.trip-controls__filters');
 const sortContentElement = document.querySelector('.trip-events');
-const boardPresenter = new BoardPresenter();
 const pointModel = new PointModel();
+const sortView = new NewSortView();
+const boardPresenter = new BoardPresenter(sortContentElement, pointModel);
 
 
 render(new NewFilterView(), filterElement);
-render(new NewSortView(), sortContentElement);
+render(sortView, sortContentElement);
 
-boardPresenter.init(sortContentElement, pointModel);
+boardPresenter.init();
 
+export {sortView, sortContentElement};
