@@ -1,4 +1,4 @@
-import {getRandomInteger} from '../util';
+import {getRandomInteger} from '../util/random';
 
 const generateDescription = () => {
   const descriptions = [

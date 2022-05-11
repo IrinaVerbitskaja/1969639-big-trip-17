@@ -1,6 +1,6 @@
-import {createElement} from '../render';
+import AbstractView from '../framework/view/abstract-view';
 import {offers} from '../mock/point';
-import {humanizeData, humanizeClassData, humanizeTime, humanizeDataFromClass, humanizeDifference} from '../util';
+import {humanizeData, humanizeClassData, humanizeTime, humanizeDataFromClass, humanizeDifference} from '../util/humanday.js';
 
 const DIFF_SECOND = 60;
 const DIFF_HOUR = 3600;
@@ -72,11 +72,11 @@ const createPointTripTemlate = (point) => {
               </div>
             </li>`
   );};
-export default class PointTripView {
-  #element = null;
+export default class PointTripView extends AbstractView {
   #point = null;
 
   constructor(point) {
+    super();
     this.#point = point;
   }
 
@@ -84,14 +84,14 @@ export default class PointTripView {
     return createPointTripTemlate(this.#point);
   }
 
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-    return this.#element;
-  }
+  setPointFormSHandler = (callback) => {
+    this._callback.pointForm = callback;
+    this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#pointFormHandler);
+  };
 
-  removeElement() {
-    this.#element = null;
-  }
+  #pointFormHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.pointForm();
+  };
+
 }

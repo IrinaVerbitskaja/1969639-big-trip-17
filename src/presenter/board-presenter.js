@@ -1,4 +1,4 @@
-import {render} from '../render';
+import {render, replace, remove} from '../framework/render';
 import FormPointView from '../view/add-point-view';
 import PointTripView from '../view/point-trip-view';
 import ListView from '../view/list-view';
@@ -26,8 +26,7 @@ export default class BoardPresenter {
     render(this.#listView, this.#boardContainer);
 
     if (this.#boardPoint.every((point) => point.isArchive)) {
-      sortView.element.remove();
-      sortView.removeElement();
+      remove(sortView);
       render(new NoPointView(), sortContentElement);
       return;
     }
@@ -42,11 +41,11 @@ export default class BoardPresenter {
     const pointAddComponent = new FormPointView(point);
 
     const replacePointToForm = () => {
-      this.#listView.element.replaceChild(pointAddComponent.element, pointComponent.element);
+      replace(pointAddComponent, pointComponent);
     };
 
     const replaceFormToPoint =() => {
-      this.#listView.element.replaceChild(pointComponent.element, pointAddComponent.element);
+      replace(pointComponent, pointAddComponent);
     };
 
     const onEscKeyDown = (evt) => {
@@ -57,18 +56,17 @@ export default class BoardPresenter {
       }
     };
 
-    pointComponent.element.querySelector('.event__rollup-btn').addEventListener('click', () => {
+    pointComponent.setPointFormSHandler(() => {
       replacePointToForm();
       document.addEventListener('keydown', onEscKeyDown);
     });
 
-    pointAddComponent.element.querySelector('.event__save-btn').addEventListener('submit', (evt) => {
-      evt.preventDefault();
+    pointAddComponent.setFormSubmitHandler(() => {
       replaceFormToPoint();
       document.removeEventListener('keydown', onEscKeyDown);
     });
 
-    pointAddComponent.element.querySelector('.event__reset-btn').addEventListener('click', () => {
+    pointAddComponent.setFormEditHandler(() => {
       replaceFormToPoint();
       document.removeEventListener('keydown', onEscKeyDown);
     });

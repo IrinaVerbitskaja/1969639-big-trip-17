@@ -1,5 +1,5 @@
-import {createElement} from '../render.js';
-import {humanizeDateAddPoint} from '../util';
+import AbstractView from '../framework/view/abstract-view.js';
+import {humanizeDateAddPoint} from '../util/humanday.js';
 import {offers} from '../mock/point.js';
 
 const createFormPointTemlate = (point) => {
@@ -117,7 +117,10 @@ const createFormPointTemlate = (point) => {
     </div>
 
     <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
-    <button class="event__reset-btn" type="reset">Cancel</button>
+    <button class="event__reset-btn" type="reset">Delete</button>
+    <button class="event__rollup-btn" type="button">
+      <span class="visually-hidden">Open event</span>
+    </button>
   </header>
   <section class="event__details">
     <section class="event__section  event__section--offers">
@@ -142,11 +145,11 @@ const createFormPointTemlate = (point) => {
   </li>`
   );};
 
-export default class FormPointView {
+export default class FormPointView extends AbstractView{
   #point = null;
-  #element = null;
 
   constructor(point) {
+    super();
     this.#point = point;
   }
 
@@ -154,14 +157,23 @@ export default class FormPointView {
     return createFormPointTemlate(this.#point);
   }
 
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-    return this.#element;
-  }
+  setFormSubmitHandler = (callback) => {
+    this._callback.formSubmit = callback;
+    this.element.querySelector('.event__save-btn').addEventListener('submit', this.#formSubmitHandler);
+  };
 
-  removeElement() {
-    this.#element = null;
-  }
+  #formSubmitHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.formSubmit();
+  };
+
+  setFormEditHandler = (callback) => {
+    this._callback.formEdit = callback;
+    this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#formEditHandler);
+  };
+
+  #formEditHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.formEdit();
+  };
 }
