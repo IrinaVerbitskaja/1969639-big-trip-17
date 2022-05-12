@@ -1,7 +1,7 @@
 import NewFilterView from './view/filter-view';
 import NewSortView from './view/sort-view';
 import BoardPresenter from './presenter/board-presenter';
-import {render} from './render';
+import {render} from './framework/render';
 import PointModel from './model/point-model';
 
 const tripMain = document.querySelector('.trip-main');
