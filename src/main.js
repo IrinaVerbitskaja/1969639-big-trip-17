@@ -3,6 +3,7 @@ import NewSortView from './view/sort-view';
 import BoardPresenter from './presenter/board-presenter';
 import {render} from './framework/render';
 import PointModel from './model/point-model';
+import {generateFilter} from './util/filter-type';
 
 const tripMain = document.querySelector('.trip-main');
 const filterElement = tripMain.querySelector('.trip-controls__filters');
@@ -11,8 +12,9 @@ const pointModel = new PointModel();
 const sortView = new NewSortView();
 const boardPresenter = new BoardPresenter(sortContentElement, pointModel);
 
+const filters = generateFilter(pointModel.point);
 
-render(new NewFilterView(), filterElement);
+render(new NewFilterView(filters), filterElement);
 render(sortView, sortContentElement);
 
 boardPresenter.init();
