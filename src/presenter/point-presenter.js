@@ -36,6 +36,7 @@ export default class PointPresenter {
 
     if (prevPointComponent === null || prevPointAddComponent === null) {
       render(this.#pointComponent, this.#pointsContainer);
+      return;
     }
 
     if (this.#mode === Mode.DEFAULT) {
