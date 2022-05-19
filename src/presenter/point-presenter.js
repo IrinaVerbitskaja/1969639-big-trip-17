@@ -1,4 +1,4 @@
-import {render, replace} from '../framework/render';
+import {render, replace, remove} from '../framework/render';
 import FormPointView from '../view/add-point-view';
 import PointTripView from '../view/point-trip-view';
 
@@ -14,6 +14,8 @@ export default class PointPresenter {
 
   init = (point) => {
     this.#point = point;
+    const prevPointComponent = this.#pointComponent;
+    const prevPointAddComponent = this.#pointAddComponent;
     this.#pointComponent = new PointTripView(point);
     this.#pointAddComponent = new FormPointView(point);
 
@@ -21,7 +23,25 @@ export default class PointPresenter {
     this.#pointAddComponent.setFormSubmitHandler(this.#handleFormSubmit);
     this.#pointAddComponent.setFormEditHandler(this.#handleFormSubmit);
 
-    render(this.#pointComponent, this.#pointsContainer);
+    if (prevPointComponent === null || prevPointAddComponent === null) {
+      render(this.#pointComponent, this.#pointsContainer);
+    }
+
+    if (this.#pointsContainer.contains(prevPointComponent)) {
+      replace(this.#pointComponent, prevPointComponent);
+    }
+
+    if (this.#pointsContainer.contains(prevPointAddComponent)) {
+      replace(this.#pointAddComponent, prevPointAddComponent);
+    }
+
+    remove(prevPointComponent);
+    remove(prevPointAddComponent);
+  };
+
+  destroy = () => {
+    remove(this.#pointComponent);
+    remove(this.#pointAddComponent);
   };
 
   #replacePointToForm = () => {
