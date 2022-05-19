@@ -89,9 +89,19 @@ export default class PointTripView extends AbstractView {
     this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#pointFormHandler);
   };
 
+  setFavoriteClickHandler = (callback) => {
+    this._callback.favoriteClick = callback;
+    this.element.querySelector('.event__favorite-btn').addEventListener('click', this.#favoriteClickHandler);
+  };
+
   #pointFormHandler = (evt) => {
     evt.preventDefault();
     this._callback.pointForm();
+  };
+
+  #favoriteClickHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.favoriteClick();
   };
 
 }
