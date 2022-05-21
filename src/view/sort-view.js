@@ -33,4 +33,18 @@ export default class NewSortView extends AbstractView {
   get template() {
     return createSortTemlate();
   }
+
+  setSortTypeChangeHandler = (callback) => {
+    this._callback.sortTypeChange = callback;
+    this.element.addEventListener('click', this.#sortTypeChangeHandler);
+  };
+
+  #sortTypeChangeHandler = (evt) => {
+    if (evt.target.tagName !== 'input' || evt.target.disabled === true) {
+      return;
+    }
+
+    evt.preventDefault();
+    this._callback.sortTypeChange(evt.target.value);
+  };
 }

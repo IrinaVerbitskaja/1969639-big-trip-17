@@ -1,5 +1,11 @@
 import dayjs from 'dayjs';
 
+const SortType = {
+  DAY: 'sort-day',
+  TIME: 'sort-time',
+  PRICE: 'sort-price',
+};
+
 const FilterType = {
   EVERYTHING: 'everything',
   FUTURE: 'future',
@@ -21,4 +27,4 @@ const generateFilter = (tasks) => Object.entries(filter).map(
     count: filterTasks(tasks).length,
   }),
 );
-export {generateFilter};
+export {generateFilter, SortType};
