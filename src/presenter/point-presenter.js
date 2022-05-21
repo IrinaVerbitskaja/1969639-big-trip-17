@@ -22,7 +22,7 @@ export default class PointPresenter {
     this.#changeMode = changeMode;
   }
 
-  init = (point) => {
+  init(point) {
     this.#point = point;
     const prevPointComponent = this.#pointComponent;
     const prevPointAddComponent = this.#pointAddComponent;
@@ -49,54 +49,54 @@ export default class PointPresenter {
 
     remove(prevPointComponent);
     remove(prevPointAddComponent);
-  };
+  }
 
-  resetView = () => {
+  resetView() {
     if (this.#mode !== Mode.DEFAULT) {
       this.#replaceFormToPoint();
     }
-  };
+  }
 
-  destroy = () => {
+  destroy() {
     remove(this.#pointComponent);
     remove(this.#pointAddComponent);
-  };
+  }
 
-  #handleFavoriteClick = () => {
+  #handleFavoriteClick() {
     this.#changeData({...this.#point, isFavorite: !this.#point.isFavorite});
-  };
+  }
 
-  #replacePointToForm = () => {
+  #replacePointToForm() {
     replace(this.#pointAddComponent, this.#pointComponent);
     document.addEventListener('keydown', this.#escKeyDown);
     this.#changeMode();
     this.#mode = Mode.EDITING;
-  };
+  }
 
-  #replaceFormToPoint =() => {
+  #replaceFormToPoint() {
     replace(this.#pointComponent, this.#pointAddComponent);
     document.removeEventListener('keydown', this.#escKeyDown);
     this.#mode = Mode.DEFAULT;
-  };
+  }
 
-  #handlePointForm = () => {
+  #handlePointForm() {
     this.#replacePointToForm();
-  };
+  }
 
-  #handleFormEdit = () => {
+  #handleFormEdit() {
     this.#replaceFormToPoint();
-  };
+  }
 
-  #handleFormSubmit = (point) => {
+  #handleFormSubmit(point) {
     this.#changeData(point);
     this.#replaceFormToPoint();
-  };
+  }
 
-  #escKeyDown = (evt) => {
+  #escKeyDown(evt) {
     if (evt.key === 'Escape' || evt.key === 'Esc') {
       evt.preventDefault();
       this.#replaceFormToPoint();
       document.removeEventListener('keydown', this.#escKeyDown);
     }
-  };
+  }
 }
