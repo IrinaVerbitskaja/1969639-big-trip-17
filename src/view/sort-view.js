@@ -36,11 +36,11 @@ export default class NewSortView extends AbstractView {
 
   setSortTypeChangeHandler = (callback) => {
     this._callback.sortTypeChange = callback;
-    this.element.addEventListener('click', this.#sortTypeChangeHandler);
+    this.element.addEventListener('input', this.#sortTypeChangeHandler);
   };
 
   #sortTypeChangeHandler = (evt) => {
-    if (evt.target.tagName !== 'input' || evt.target.disabled === true) {
+    if (evt.target.tagName !== 'INPUT' || evt.target.disabled === true) {
       return;
     }
 

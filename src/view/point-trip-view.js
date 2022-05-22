@@ -4,6 +4,7 @@ import {humanizeData, humanizeClassData, humanizeTime, humanizeDataFromClass, hu
 
 const DIFF_SECOND = 60;
 const DIFF_HOUR = 3600;
+const DIFF_DAY = 24;
 
 const createPointTripTemlate = (point) => {
   const {basePrice, dateFrom, dateTo, type} = point;
@@ -17,10 +18,16 @@ const createPointTripTemlate = (point) => {
 
   const diffHour = () => {
     const hour = Math.round(differenceDate/DIFF_HOUR);
-    if ( hour > 0) {
+    if ( hour > 0 && hour < DIFF_DAY) {
       const second = differenceDate - (hour * DIFF_HOUR);
       const minute = Math.ceil(second / DIFF_SECOND);
       return `${hour}H ${minute}M`;
+    } else if (hour >= DIFF_DAY) {
+      const day = Math.floor(hour / DIFF_DAY);
+      const hourDay = hour - (day * DIFF_DAY);
+      const second = differenceDate - (hour * DIFF_HOUR);
+      const minute = Math.ceil(second / DIFF_SECOND);
+      return `${day}D ${hourDay}H ${minute}M`;
     } else {
       const minute = Math.ceil(differenceDate / DIFF_SECOND);
       return `${minute}M`;}

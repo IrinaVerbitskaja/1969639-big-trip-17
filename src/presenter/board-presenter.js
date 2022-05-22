@@ -4,6 +4,8 @@ import NoPointView from '../view/no-point-view';
 import NewSortView from '../view/sort-view';
 import PointPresenter from './point-presenter';
 import {updateItem} from '../util/random';
+import {SortType} from '../util/filter-type';
+import {sortPointPriceDown, sortPointTimeDown, sortPointUp} from '../util/humanday';
 
 export default class BoardPresenter {
   #boardContainer = null;
@@ -13,6 +15,8 @@ export default class BoardPresenter {
   #noPointComponent = new NoPointView();
   #boardPoint = [];
   #pointPresenter = new Map();
+  #currentSortType = SortType.DAY;
+  //#sourcedBoardPoint = [];
 
   constructor(boardContainer, pointModel) {
     this.#boardContainer = boardContainer;
@@ -33,8 +37,36 @@ export default class BoardPresenter {
     this.#pointPresenter.get(updatedPoint.id).init(updatedPoint);
   }
 
+
+  #sortPoint = (sortType) => {
+    switch (sortType) {
+      case SortType.TIME:
+        this.#boardPoint.sort(sortPointTimeDown);
+        break;
+      case SortType.PRICE:
+        this.#boardPoint.sort(sortPointPriceDown);
+        break;
+      case SortType.DAY:
+        this.#boardPoint.sort(sortPointUp);
+        break;
+    }
+
+    this.#currentSortType = sortType;
+  };
+
+  #handleSortTypeChange = (sortType) => {
+    if (this.#currentSortType === sortType) {
+      return;
+    }
+
+    this.#sortPoint(sortType);
+    this.#clearPointList();
+    this.#renderPoints();
+  };
+
   #renderSort() {
     render(this.#sortComponent, this.#boardContainer, RenderPosition.AFTERBEGIN);
+    this.#sortComponent.setSortTypeChangeHandler(this.#handleSortTypeChange);
   }
 
   #renderNoPoints() {
@@ -66,6 +98,7 @@ export default class BoardPresenter {
     }
 
     this.#renderSort();
+    this.#boardPoint.sort(sortPointUp);
     this.#renderPoints();
   }
 }
