@@ -22,7 +22,7 @@ export default class PointPresenter {
     this.#changeMode = changeMode;
   }
 
-  init = (point) => {
+  init(point) {
     this.#point = point;
     const prevPointComponent = this.#pointComponent;
     const prevPointAddComponent = this.#pointAddComponent;
@@ -49,18 +49,18 @@ export default class PointPresenter {
 
     remove(prevPointComponent);
     remove(prevPointAddComponent);
-  };
+  }
 
-  resetView = () => {
+  resetView() {
     if (this.#mode !== Mode.DEFAULT) {
       this.#replaceFormToPoint();
     }
-  };
+  }
 
-  destroy = () => {
+  destroy() {
     remove(this.#pointComponent);
     remove(this.#pointAddComponent);
-  };
+  }
 
   #handleFavoriteClick = () => {
     this.#changeData({...this.#point, isFavorite: !this.#point.isFavorite});
@@ -73,7 +73,7 @@ export default class PointPresenter {
     this.#mode = Mode.EDITING;
   };
 
-  #replaceFormToPoint =() => {
+  #replaceFormToPoint = () => {
     replace(this.#pointComponent, this.#pointAddComponent);
     document.removeEventListener('keydown', this.#escKeyDown);
     this.#mode = Mode.DEFAULT;
