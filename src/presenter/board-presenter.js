@@ -90,7 +90,7 @@ export default class BoardPresenter {
 
     this.#renderSort();
     this.#boardPoint.sort(sortPointUp);
-    this.#renderPoints();
+    his.#renderPoints();
   };
 }
 
