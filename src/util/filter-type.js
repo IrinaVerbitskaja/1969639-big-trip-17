@@ -27,4 +27,5 @@ const generateFilter = (tasks) => Object.entries(filter).map(
     count: filterTasks(tasks).length,
   }),
 );
+
 export {generateFilter, SortType};
