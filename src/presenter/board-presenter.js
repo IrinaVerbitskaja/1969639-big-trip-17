@@ -15,8 +15,6 @@ export default class BoardPresenter {
   #noPointComponent = new NoPointView();
   #boardPoint = [];
   #pointPresenter = new Map();
-  #currentSortType = SortType.DAY;
-  //#sourcedBoardPoint = [];
 
   constructor(boardContainer, pointModel) {
     this.#boardContainer = boardContainer;
@@ -28,15 +26,14 @@ export default class BoardPresenter {
     this.#renderBoard();
   }
 
-  #handleModeChange() {
+  #handleModeChange = () => {
     this.#pointPresenter.forEach((presenter) => presenter.resetView());
-  }
+  };
 
-  #handlePointChange(updatedPoint) {
+  #handlePointChange = (updatedPoint) =>{
     this.#boardPoint = updateItem(this.#boardPoint, updatedPoint);
     this.#pointPresenter.get(updatedPoint.id).init(updatedPoint);
-  }
-
+  };
 
   #sortPoint = (sortType) => {
     switch (sortType) {
@@ -50,46 +47,40 @@ export default class BoardPresenter {
         this.#boardPoint.sort(sortPointUp);
         break;
     }
-
-    this.#currentSortType = sortType;
   };
 
   #handleSortTypeChange = (sortType) => {
-    if (this.#currentSortType === sortType) {
-      return;
-    }
-
     this.#sortPoint(sortType);
     this.#clearPointList();
     this.#renderPoints();
   };
 
-  #renderSort() {
+  #renderSort = () => {
     render(this.#sortComponent, this.#boardContainer, RenderPosition.AFTERBEGIN);
     this.#sortComponent.setSortTypeChangeHandler(this.#handleSortTypeChange);
-  }
+  };
 
-  #renderNoPoints() {
+  #renderNoPoints = () => {
     remove(this.#sortComponent);
     render(this.#noPointComponent, this.#boardContainer, RenderPosition.AFTERBEGIN);
-  }
+  };
 
-  #renderPoints() {
+  #renderPoints = () => {
     this.#boardPoint.forEach((point) => this.#renderTripPoint(point));
-  }
+  };
 
-  #renderTripPoint(point) {
+  #renderTripPoint = (point) => {
     const pointPresenter = new PointPresenter(this.#listView.element, this.#handlePointChange, this.#handleModeChange);
     pointPresenter.init(point);
     this.#pointPresenter.set(point.id, pointPresenter);
-  }
+  };
 
-  #clearPointList() {
+  #clearPointList = () => {
     this.#pointPresenter.forEach((presenter) => presenter.destroy());
     this.#pointPresenter.clear();
-  }
+  };
 
-  #renderBoard() {
+  #renderBoard = () => {
     render(this.#listView, this.#boardContainer);
 
     if (this.#boardPoint.every((point) => point.isArchive)) {
@@ -100,6 +91,6 @@ export default class BoardPresenter {
     this.#renderSort();
     this.#boardPoint.sort(sortPointUp);
     this.#renderPoints();
-  }
+  };
 }
 
