@@ -21,7 +21,7 @@ const generateOfferType = () => {
 
 const destination = {
   description: generateDescription(),
-  name: 'Chmonix',
+  name: 'Geneva',
   pictures: [
     {
       src: `http://picsum.photos/300/200?r=${getRandomInteger(0, 10)}`,
