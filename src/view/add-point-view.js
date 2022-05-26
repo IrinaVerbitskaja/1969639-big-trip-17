@@ -1,13 +1,13 @@
-import AbstractView from '../framework/view/abstract-view.js';
+import AbstractStatefulView from '../framework/view/abstract-stateful-view';
 import {humanizeDateAddPoint} from '../util/humanday.js';
 import {offers} from '../mock/point.js';
 
 const createFormPointTemlate = (point) => {
-  const {basePrice, destination, type, dateFrom, dateTo} = point;
+  const {basePrice, destination, type, dateFrom, dateTo, isBasePrice, isDateFrom, isDateTo} = point;
 
-  const price = basePrice !== null ? basePrice : '';
-  const dateFromHum = dateFrom !== null ? humanizeDateAddPoint(dateFrom) : '';
-  const dateToHum = dateTo !== null ? humanizeDateAddPoint(dateTo) : '';
+  const price = isBasePrice ? basePrice : '';
+  const dateFromHum = isDateFrom ? humanizeDateAddPoint(dateFrom) : '';
+  const dateToHum = isDateTo ? humanizeDateAddPoint(dateTo) : '';
 
   const pictures = destination.pictures.map((photo) => `<img class="event__photo" src=${photo.src} alt=${photo.description}>`).join('');
 
@@ -145,17 +145,23 @@ const createFormPointTemlate = (point) => {
   </li>`
   );};
 
-export default class FormPointView extends AbstractView{
-  #point = null;
+export default class FormPointView extends AbstractStatefulView{
 
   constructor(point) {
     super();
-    this.#point = point;
+    this._state = FormPointView.parsePointToState(point);
+    this.#setInnerHandlers();
   }
 
   get template() {
-    return createFormPointTemlate(this.#point);
+    return createFormPointTemlate(this._state);
   }
+
+  _restoreHandlers = () => {
+    this.#setInnerHandlers();
+    this.setFormSubmitHandler(this._callback.formSubmit);
+  };
+
 
   setFormSubmitHandler = (callback) => {
     this._callback.formSubmit = callback;
@@ -164,7 +170,7 @@ export default class FormPointView extends AbstractView{
 
   #formSubmitHandler = (evt) => {
     evt.preventDefault();
-    this._callback.formSubmit(this.#point);
+    this._callback.formSubmit(FormPointView.parseStateToPoint(this._state));
   };
 
   setFormEditHandler = (callback) => {
@@ -175,5 +181,83 @@ export default class FormPointView extends AbstractView{
   #formEditHandler = (evt) => {
     evt.preventDefault();
     this._callback.formEdit();
+  };
+
+  #iconChangeHandler = (evt) => {
+    evt.preventDefault();
+    this.updateElement({
+      type: evt.target.value,
+    });
+  };
+
+  #priceInputHandler = (evt) => {
+    evt.preventDefault();
+    this._setState({
+      basePrice: evt.target.value,
+    });
+  };
+
+  #startTimeHandler = (evt) => {
+    evt.preventDefault();
+    this._setState({
+      dateFrom: evt.target.value,
+    });
+  };
+
+  #endTimeHandler = (evt) => {
+    evt.preventDefault();
+    this._setState({
+      dateTo: evt.target.value,
+    });
+  };
+
+  #townNameHandler = (evt) => {
+    evt.preventDefault();
+    this._setState({
+      destination.name: evt.target.value,
+    });
+  };
+
+  #setInnerHandlers = () => {
+    this.element.querySelector('.event__type-group').addEventListener('change', this.#iconChangeHandler);
+    this.element.querySelector('.event__input--price').addEventListener('input', this.#priceInputHandler);
+    this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#formEditHandler);
+    this.element.querySelector('[name="event-start-time"]').addEventListener('input', this.#startTimeHandler);
+    this.element.querySelector('[name="event-end-time"]').addEventListener('input', this.#endTimeHandler);
+    this.element.querySelector('[id="destination-list-1"]').addEventListener('change', this.#townNameHandler);
+  };
+
+  reset = (point) => {
+    this.updateElement(
+      FormPointView.parsePointToState(point),
+    );
+  };
+
+  static parsePointToState = (point) => ({...point,
+    isBasePrice: point.basePrice !== null,
+    isDateFrom: point.dateFrom !== null,
+    isDateTo: point.dateTo !== null,
+  });
+
+  static parseStateToPoint = (state) => {
+    const point = {...state};
+
+    if (!point.isBasePrice) {
+      point.basePrice = null;
+    }
+
+    if (!point.isDateFrom) {
+      point.dateFrom = null;
+    }
+
+    if (!point.isDateTo) {
+      point.dateTo = null;
+    }
+
+    delete point.isBasePrice;
+    delete point.isDateFrom;
+    delete point.isDateTo;
+
+    return point;
   };
 }
