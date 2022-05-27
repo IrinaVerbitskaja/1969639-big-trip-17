@@ -213,8 +213,10 @@ export default class FormPointView extends AbstractStatefulView{
 
   #townNameHandler = (evt) => {
     evt.preventDefault();
-    this.updateElement({...this._state.destination,
-      name: evt.target.value,
+    this.updateElement({destination:
+      {...this._state.destination,
+        name: evt.target.value,
+      }
     });
   };
 
