@@ -168,7 +168,6 @@ export default class FormPointView extends AbstractStatefulView{
     this.setFormSubmitHandler(this._callback.formSubmit);
   };
 
-
   setFormSubmitHandler = (callback) => {
     this._callback.formSubmit = callback;
     this.element.querySelector('.event__save-btn').addEventListener('submit', this.#formSubmitHandler);
