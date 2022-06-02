@@ -166,6 +166,7 @@ export default class FormPointView extends AbstractStatefulView{
     this.#setInnerHandlers();
     this.#setDatepicker();
     this.setFormSubmitHandler(this._callback.formSubmit);
+    this.setDeleteClickHandler(this._callback.deleteClick);
   };
 
   setFormSubmitHandler = (callback) => {
@@ -186,6 +187,11 @@ export default class FormPointView extends AbstractStatefulView{
   #formEditHandler = (evt) => {
     evt.preventDefault();
     this._callback.formEdit();
+  };
+
+  setDeleteClickHandler = (callback) => {
+    this._callback.deleteClick = callback;
+    this.element.querySelector('.event__reset-btn').addEventListener('click', this.#formDeleteClickHandler);
   };
 
   #iconChangeHandler = (evt) => {
@@ -294,6 +300,11 @@ export default class FormPointView extends AbstractStatefulView{
     this.updateElement(
       FormPointView.parsePointToState(point),
     );
+  };
+
+  #formDeleteClickHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.deleteClick(FormPointView.parseStateToPoint(this._state));
   };
 
   static parsePointToState = (point) => ({

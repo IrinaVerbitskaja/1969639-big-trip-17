@@ -21,6 +21,7 @@ export default class BoardPresenter {
   constructor(boardContainer, pointModel) {
     this.#boardContainer = boardContainer;
     this.#pointModel = pointModel;
+    this.#pointModel.addObserver(this.#handleModelEvent);
   }
 
   get point() {
@@ -144,10 +145,10 @@ export default class BoardPresenter {
     this.#pointPresenter.set(point.id, pointPresenter);
   };
 
-  #clearPointList = () => {
+  /*#clearPointList = () => {
     this.#pointPresenter.forEach((presenter) => presenter.destroy());
     this.#pointPresenter.clear();
-  };
+  };*/
 
   #clearBoard = ({resetSortType = false} = {}) => {
 
