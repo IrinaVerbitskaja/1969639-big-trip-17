@@ -21,12 +21,12 @@ const filter = {
   [FilterType.PAST]: (tasks) => tasks.filter((task) => (dayjs(task.dateTo).isBefore(dayjs()) && !task.isArchive) || filterEvery(task.dateFrom, task.dateTo, task)),
 };
 
-const generateFilter = (tasks) => Object.entries(filter).map(
+/*const generateFilter = (tasks) => Object.entries(filter).map(
   ([filterName, filterTasks]) => ({
     name: filterName,
     count: filterTasks(tasks).length,
   }),
-);
+);*/
 
 const UserAction = {
   UPDATE_POINT: 'UPDATE_POINT',
@@ -41,4 +41,4 @@ const UpdateType = {
 };
 
 
-export {generateFilter, SortType, UserAction, UpdateType};
+export {filter, SortType, UserAction, UpdateType};
