@@ -41,4 +41,4 @@ const UpdateType = {
 };
 
 
-export {filter, SortType, UserAction, UpdateType};
+export {filter, FilterType, SortType, UserAction, UpdateType};
