@@ -12,7 +12,7 @@ const sortContentElement = document.querySelector('.trip-events');
 const pointModel = new PointModel();
 const filterModel = new FilterModel();
 
-const boardPresenter = new BoardPresenter(sortContentElement, pointModel);
+const boardPresenter = new BoardPresenter(sortContentElement, pointModel, filterModel);
 const filterPresenter = new FilterPresenter(filterElement, filterModel, pointModel);
 //const filters = generateFilter(pointModel.point);
 

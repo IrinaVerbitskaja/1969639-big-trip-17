@@ -3,6 +3,7 @@ import ListView from '../view/list-view';
 import NoPointView from '../view/no-point-view';
 import NewSortView from '../view/sort-view';
 import PointPresenter from './point-presenter';
+import {filter} from '../util/filter-type';
 //import {updateItem} from '../util/random';
 import {SortType, UpdateType, UserAction} from '../util/filter-type';
 import {sortPointPriceDown, sortPointTimeDown, sortPointUp} from '../util/humanday';
@@ -17,24 +18,31 @@ export default class BoardPresenter {
   //#boardPoint = [];
   #pointPresenter = new Map();
   #sortComponent = null;
+  #filterModel = null;
 
-  constructor(boardContainer, pointModel) {
+  constructor(boardContainer, pointModel, filterModel) {
     this.#boardContainer = boardContainer;
     this.#pointModel = pointModel;
+    this.#filterModel = filterModel;
     this.#pointModel.addObserver(this.#handleModelEvent);
+    this.#filterModel.addObserver(this.#handleModelEvent);
   }
 
   get point() {
+    const filterType = this.#filterModel.filter;
+    const points = this.#pointModel.point;
+    const filteredPoints = filter[filterType](points);
+
     switch (this.#currentSortType) {
       case SortType.TIME:
-        return [...this.#pointModel.point].sort(sortPointTimeDown);
+        return filteredPoints.sort(sortPointTimeDown);
       case SortType.PRICE:
-        return [...this.#pointModel.point].sort(sortPointPriceDown);
+        return filteredPoints.sort(sortPointPriceDown);
       case SortType.DAY:
-        return [...this.#pointModel.point].sort(sortPointUp);
+        return filteredPoints.sort(sortPointUp);
     }
 
-    return this.#pointModel.point;
+    return filteredPoints;
   }
 
 
