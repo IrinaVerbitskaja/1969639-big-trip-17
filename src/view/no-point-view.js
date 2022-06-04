@@ -2,7 +2,7 @@ import AbstractView from '../framework/view/abstract-view.js';
 import {FilterType} from '../util/filter-type.js';
 
 const NoTasksTextType = {
-  [FilterType.EVERYTHING]: 'Click «ADD NEW TASK» in menu to create your first point',
+  [FilterType.EVERYTHING]: 'Click «+ NEW EVENT» in menu to create your first point',
   [FilterType.FUTURE]: 'There are no future points now',
   [FilterType.PAST]: 'There are no past points',
 

@@ -3,6 +3,7 @@ import ListView from '../view/list-view';
 import NoPointView from '../view/no-point-view';
 import NewSortView from '../view/sort-view';
 import PointPresenter from './point-presenter';
+import PointNewPresenter from './point-new-presenter';
 import {filter} from '../util/filter-type';
 //import {updateItem} from '../util/random';
 import {SortType, UpdateType, UserAction, FilterType} from '../util/filter-type';
@@ -14,6 +15,7 @@ export default class BoardPresenter {
   #listView = new ListView();
   //#sortComponent = new NewSortView();
   #noPointComponent = null;
+  #pointNewPresenter = null;
   #currentSortType = SortType.DAY;
   //#boardPoint = [];
   #pointPresenter = new Map();
@@ -25,6 +27,7 @@ export default class BoardPresenter {
     this.#boardContainer = boardContainer;
     this.#pointModel = pointModel;
     this.#filterModel = filterModel;
+    this.#pointNewPresenter = new PointNewPresenter(this.#listView.element, this.#handleViewAction);
     this.#pointModel.addObserver(this.#handleModelEvent);
     this.#filterModel.addObserver(this.#handleModelEvent);
   }
@@ -52,7 +55,14 @@ export default class BoardPresenter {
     this.#renderBoard();
   }
 
+  createTask = (callback) => {
+    this.#currentSortType = SortType.DAY;
+    this.#filterModel.setFilter(UpdateType.MAJOR, FilterType.ALL);
+    this.#pointNewPresenter.init(callback);
+  };
+
   #handleModeChange = () => {
+    this.#pointNewPresenter.destroy();
     this.#pointPresenter.forEach((presenter) => presenter.resetView());
   };
 
@@ -162,6 +172,7 @@ export default class BoardPresenter {
 
   #clearBoard = ({resetSortType = false} = {}) => {
 
+    this.#pointNewPresenter.destroy();
     this.#pointPresenter.forEach((presenter) => presenter.destroy());
     this.#pointPresenter.clear();
 

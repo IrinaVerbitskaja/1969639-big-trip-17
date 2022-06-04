@@ -18,5 +18,18 @@ const filterPresenter = new FilterPresenter(filterElement, filterModel, pointMod
 
 //render(new NewFilterView(filters, 'everything'), filterElement);
 
+const handleNewTaskFormClose = () => {
+  document.querySelector('.trip-main__event-add-btn').disabled = false;
+};
+
+const handleNewTaskButtonClick = () => {
+  console.log('кнопка нажата');
+  boardPresenter.createTask(handleNewTaskFormClose);
+  document.querySelector('.trip-main__event-add-btn').disabled = true;
+};
+
+
+document.querySelector('.trip-main__event-add-btn').addEventListener('click', handleNewTaskButtonClick);
+
 filterPresenter.init();
 boardPresenter.init();
