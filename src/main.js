@@ -1,7 +1,8 @@
 //import NewFilterView from './view/filter-view';
 import FilterPresenter from './presenter/filter-presenter';
 import BoardPresenter from './presenter/board-presenter';
-//import {render} from './framework/render';
+import NewFormPointView from './view/add-new-point-view';
+import {render, RenderPosition, remove} from './framework/render';
 import PointModel from './model/point-model';
 import FilterModel from './model/filter-model';
 //import {generateFilter} from './util/filter-type';
@@ -12,6 +13,7 @@ const sortContentElement = document.querySelector('.trip-events');
 const pointModel = new PointModel();
 const filterModel = new FilterModel();
 
+
 const boardPresenter = new BoardPresenter(sortContentElement, pointModel, filterModel);
 const filterPresenter = new FilterPresenter(filterElement, filterModel, pointModel);
 //const filters = generateFilter(pointModel.point);
@@ -20,6 +22,7 @@ const filterPresenter = new FilterPresenter(filterElement, filterModel, pointMod
 
 const handleNewTaskFormClose = () => {
   document.querySelector('.trip-main__event-add-btn').disabled = false;
+  render(NewFormPointView(), sortContentElement, RenderPosition.AFTERBEGIN)
 };
 
 const handleNewTaskButtonClick = () => {
@@ -33,3 +36,5 @@ document.querySelector('.trip-main__event-add-btn').addEventListener('click', ha
 
 filterPresenter.init();
 boardPresenter.init();
+
+

@@ -34,7 +34,9 @@ export default class BoardPresenter {
 
   get point() {
     this.#filterType = this.#filterModel.filter;
+    console.log(this.#filterType);
     const points = this.#pointModel.point;
+    console.log(points);
     const filteredPoints = filter[this.#filterType](points);
 
     switch (this.#currentSortType) {
@@ -57,7 +59,7 @@ export default class BoardPresenter {
 
   createTask = (callback) => {
     this.#currentSortType = SortType.DAY;
-    this.#filterModel.setFilter(UpdateType.MAJOR, FilterType.ALL);
+    this.#filterModel.setFilter(UpdateType.MAJOR, FilterType.EVERYTHING);
     this.#pointNewPresenter.init(callback);
   };
 
@@ -108,7 +110,7 @@ export default class BoardPresenter {
         break;
       case UpdateType.MAJOR:
         // - обновить всю доску (например, при переключении фильтра)
-        this.#clearBoard({resetSortType: true});
+        this.#clearBoard();
         this.#renderBoard();
         break;
     }
@@ -203,7 +205,6 @@ export default class BoardPresenter {
     //this.#boardPoint.sort(sortPointUp);
     //this.#renderPoints();
     //render(this.#listView.element, this.#boardContainer.element);
-
     this.#renderPoints();
   };
 }

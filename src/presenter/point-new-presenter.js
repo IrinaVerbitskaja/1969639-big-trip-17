@@ -17,9 +17,9 @@ export default class PointNewPresenter {
   init = (callback) => {
     this.#destroyCallback = callback;
 
-    if (this.#pointEditComponent !== null) {
+    /* if (this.#pointEditComponent !== null) {
       return;
-    }
+    }*/
 
     this.#pointEditComponent = new NewFormPointView();
     this.#pointEditComponent.setFormSubmitHandler(this.#handleFormSubmit);
