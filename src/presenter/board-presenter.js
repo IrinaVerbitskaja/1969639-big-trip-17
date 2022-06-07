@@ -57,10 +57,10 @@ export default class BoardPresenter {
     this.#renderBoard();
   }
 
-  createTask = (callback, newPoint) => {
+  createTask = (callback) => {
     this.#currentSortType = SortType.DAY;
     this.#filterModel.setFilter(UpdateType.MAJOR, FilterType.EVERYTHING);
-    this.#pointNewPresenter.init(callback, newPoint);
+    this.#pointNewPresenter.init(callback);
   };
 
   #handleModeChange = () => {
