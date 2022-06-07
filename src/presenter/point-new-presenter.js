@@ -2,10 +2,10 @@ import {remove, render, RenderPosition} from '../framework/render.js';
 import NewFormPointView from '../view/add-new-point-view.js';
 import {nanoid} from 'nanoid';
 import {UserAction, UpdateType} from '../util/filter-type.js';
-import {destination, generateOfferType} from '../mock/point.js';
-import {getRandomInteger} from '../util/random';
+//import {destination, generateOfferType} from '../mock/point.js';
+//import {getRandomInteger} from '../util/random';
 
-const newPoint =  {
+/*const newPoint =  {
   basePrice: getRandomInteger(0, 300),
   dateFrom: `2019-07-0${getRandomInteger(1, 9)}T22:55:56.845Z`,
   dateTo: `2019-07-${getRandomInteger(10, 30)}T11:22:13.375Z`,
@@ -14,7 +14,7 @@ const newPoint =  {
   isFavorite: false,
   offers: [1, 2],
   type:generateOfferType(),
-};
+};*/
 
 export default class PointNewPresenter {
   #taskListContainer = null;
@@ -27,7 +27,7 @@ export default class PointNewPresenter {
     this.#changeData = changeData;
   }
 
-  init = (callback) => {
+  init = (callback, newPoint) => {
     this.#destroyCallback = callback;
 
     if (this.#pointEditComponent !== null) {
