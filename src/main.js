@@ -42,7 +42,7 @@ const handleNewTaskFormClose = () => {
 
 const handleNewTaskButtonClick = () => {
   console.log('кнопка нажата');
-  boardPresenter.createTask(handleNewTaskFormClose);
+  boardPresenter.createTask(handleNewTaskFormClose, newPoint);
   document.querySelector('.trip-main__event-add-btn').disabled = true;
 };
 
