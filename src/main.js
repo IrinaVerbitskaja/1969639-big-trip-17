@@ -37,7 +37,7 @@ const filterPresenter = new FilterPresenter(filterElement, filterModel, pointMod
 
 const handleNewTaskFormClose = () => {
   document.querySelector('.trip-main__event-add-btn').disabled = false;
-  render(new NewFormPointView(newPoint), sortContentElement, RenderPosition.AFTERBEGIN);
+  //render(new NewFormPointView(newPoint), sortContentElement, RenderPosition.AFTERBEGIN);
 };
 
 const handleNewTaskButtonClick = () => {

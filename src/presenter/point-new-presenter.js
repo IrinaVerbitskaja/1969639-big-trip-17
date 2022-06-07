@@ -36,7 +36,7 @@ export default class PointNewPresenter {
 
     this.#pointEditComponent = new NewFormPointView(newPoint);
     this.#pointEditComponent.setFormSubmitHandler(this.#handleFormSubmit);
-    this.#pointEditComponent.setDeleteClickHandler(this.#handleDeleteClick);
+    //this.#pointEditComponent.setDeleteClickHandler(this.#handleDeleteClick);
     this.#pointEditComponent.setFormEditHandler(this.#handleDeleteClick);
 
     render(this.#pointEditComponent, this.#taskListContainer, RenderPosition.AFTERBEGIN);
@@ -69,6 +69,7 @@ export default class PointNewPresenter {
   };
 
   #handleDeleteClick = () => {
+    console.log('обработчик delit');
     this.destroy();
   };
 
