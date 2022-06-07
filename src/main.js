@@ -22,7 +22,7 @@ const filterPresenter = new FilterPresenter(filterElement, filterModel, pointMod
 
 const handleNewTaskFormClose = () => {
   document.querySelector('.trip-main__event-add-btn').disabled = false;
-  render(NewFormPointView(), sortContentElement, RenderPosition.AFTERBEGIN)
+  render(new NewFormPointView(), sortContentElement, RenderPosition.AFTERBEGIN);
 };
 
 const handleNewTaskButtonClick = () => {

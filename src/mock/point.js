@@ -71,5 +71,5 @@ const generatePoint = () => ({
   type:generateOfferType(),
 });
 
-export {generatePoint, offers};
+export {generatePoint, offers, destination, generateOfferType};
 
