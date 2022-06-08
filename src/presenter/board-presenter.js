@@ -38,6 +38,7 @@ export default class BoardPresenter {
     const points = this.#pointModel.point;
     console.log(points);
     const filteredPoints = filter[this.#filterType](points);
+    console.log(filteredPoints);
 
     switch (this.#currentSortType) {
       case SortType.TIME:
