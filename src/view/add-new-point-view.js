@@ -10,10 +10,12 @@ const createFormPointTemlate = (point) => {
   const price = isBasePrice ? basePrice : '';
   const dateFromHum = isDateFrom ? humanizeDateAddPoint(dateFrom) : '';
   const dateToHum = isDateTo ? humanizeDateAddPoint(dateTo) : '';
-
+  const headDestination = destination ? '<h3 class="event__section-title  event__section-title--destination">Destination</h3>' : '';
   const pictures = destination.pictures.map((photo) => `<img class="event__photo" src=${photo.src} alt=${photo.description}>`).join('');
 
   const pointTypeOffer = offers.find((offer) => offer.type === type);
+  const headOffer = pointTypeOffer ? '<h3 class="event__section-title  event__section-title--offers">Offers</h3>': '';
+
   let pointAddOffer = [];
   if (pointTypeOffer) {
     pointAddOffer = pointTypeOffer.offers.map((typeOffer) => {
@@ -123,14 +125,14 @@ const createFormPointTemlate = (point) => {
   </header>
   <section class="event__details">
     <section class="event__section  event__section--offers">
-      <h3 class="event__section-title  event__section-title--offers">Offers</h3>
+      ${headOffer}
       <div class="event__available-offers">
       ${pointAddOffer}
     </div>
   </section>
 
     <section class="event__section  event__section--destination">
-      <h3 class="event__section-title  event__section-title--destination">Destination</h3>
+      ${headDestination}
       <p class="event__destination-description">${destination.description}</p>
 
       <div class="event__photos-container">
@@ -273,7 +275,7 @@ export default class NewFormPointView extends AbstractStatefulView{
           'time_24hr': true,
           dateFormat: 'd/m/y H:i',
           minDate: 'today',
-          defaultDate: this._state.dateFrom,
+          defaultDate:'today',
           onChange: this.#fromDateChangeHandler,
         },
       );
@@ -286,7 +288,7 @@ export default class NewFormPointView extends AbstractStatefulView{
           'time_24hr': true,
           dateFormat: 'd/m/y H:i',
           minDate: this._state.dateFrom,
-          defaultDate: this._state.dateTo,
+          defaultDate: 'today',
           onChange: this.#toDateChangeHandler,
         },
       );

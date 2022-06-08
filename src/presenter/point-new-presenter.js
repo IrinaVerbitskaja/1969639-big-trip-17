@@ -27,14 +27,14 @@ export default class PointNewPresenter {
     this.#changeData = changeData;
   }
 
-  init = (callback, newPoint) => {
+  init = (callback, point) => {
     this.#destroyCallback = callback;
 
     if (this.#pointEditComponent !== null) {
       return;
     }
 
-    this.#pointEditComponent = new NewFormPointView(newPoint);
+    this.#pointEditComponent = new NewFormPointView(point);
     this.#pointEditComponent.setFormSubmitHandler(this.#handleFormSubmit);
     //this.#pointEditComponent.setDeleteClickHandler(this.#handleDeleteClick);
     this.#pointEditComponent.setFormEditHandler(this.#handleDeleteClick);
