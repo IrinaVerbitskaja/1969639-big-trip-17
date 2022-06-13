@@ -2,19 +2,6 @@ import {remove, render, RenderPosition} from '../framework/render.js';
 import NewFormPointView from '../view/add-new-point-view.js';
 import {nanoid} from 'nanoid';
 import {UserAction, UpdateType} from '../util/filter-type.js';
-//import {destination, generateOfferType} from '../mock/point.js';
-//import {getRandomInteger} from '../util/random';
-
-/*const newPoint =  {
-  basePrice: getRandomInteger(0, 300),
-  dateFrom: `2019-07-0${getRandomInteger(1, 9)}T22:55:56.845Z`,
-  dateTo: `2019-07-${getRandomInteger(10, 30)}T11:22:13.375Z`,
-  destination: destination,
-  id: nanoid(),
-  isFavorite: false,
-  offers: [1, 2],
-  type:generateOfferType(),
-};*/
 
 export default class PointNewPresenter {
   #taskListContainer = null;
@@ -36,7 +23,6 @@ export default class PointNewPresenter {
 
     this.#pointEditComponent = new NewFormPointView(point);
     this.#pointEditComponent.setFormSubmitHandler(this.#handleFormSubmit);
-    //this.#pointEditComponent.setDeleteClickHandler(this.#handleDeleteClick);
     this.#pointEditComponent.setFormEditHandler(this.#handleDeleteClick);
 
     render(this.#pointEditComponent, this.#taskListContainer, RenderPosition.AFTERBEGIN);
@@ -61,15 +47,12 @@ export default class PointNewPresenter {
     this.#changeData(
       UserAction.ADD_POINT,
       UpdateType.MINOR,
-      // Пока у нас нет сервера, который бы после сохранения
-      // выдывал честный id задачи, нам нужно позаботиться об этом самим
       {id: nanoid(), ...point},
     );
     this.destroy();
   };
 
   #handleDeleteClick = () => {
-    console.log('обработчик delit');
     this.destroy();
   };
 

@@ -3,6 +3,7 @@ import {humanizeDateAddPoint} from '../util/humanday.js';
 import {offers} from '../mock/point.js';
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
+import {cities} from '../mock/point.js';
 
 const createFormPointTemlate = (point) => {
   const {basePrice, destination, type, dateFrom, dateTo, isBasePrice, isDateFrom, isDateTo} = point;
@@ -11,21 +12,56 @@ const createFormPointTemlate = (point) => {
   const dateFromHum = isDateFrom ? humanizeDateAddPoint(dateFrom) : '';
   const dateToHum = isDateTo ? humanizeDateAddPoint(dateTo) : '';
 
-  const pictures = destination.pictures.map((photo) => `<img class="event__photo" src=${photo.src} alt=${photo.description}>`).join('');
+  const textName = destination.name ? `value = ${destination.name} list="destination-list-1` : '';
+  const headDestination = () => {
+    let textDestination = '';
+    let pictures = '';
+    let text = '';
+    if (destination.name) {
+      if (destination.pictures) {
+        pictures = destination.pictures.map((photo) => `<img class="event__photo" src=${photo.src} alt=${photo.description}>`).join('');
+      }
+      if (destination.description) {
+        text = destination.description;
+      }
+      textDestination = `<section class="event__section  event__section--destination">
+    <h3 class="event__section-title  event__section-title--destination">Destination</h3>
+     <p class="event__destination-description">${text}</p>
+     <div class="event__photos-container">
+      <div class="event__photos-tape">
+       ${pictures}
+      </div>
+    </div>
+   </section>`;}
+    return textDestination;
+  };
+
+  const optionCities = cities.map((city) => `<option value=${city}></option>`).join('');
 
   const pointTypeOffer = offers.find((offer) => offer.type === type);
   let pointAddOffer = [];
-  if (pointTypeOffer) {
-    pointAddOffer = pointTypeOffer.offers.map((typeOffer) => {
-      const checked = point.offers.includes(typeOffer.id) ? 'checked' : '';
-      return     `<div class="event__offer-selector">
+  const headOffer = () => {
+    let textOffer = '';
+    if (pointTypeOffer) {
+      pointAddOffer = pointTypeOffer.offers.map((typeOffer) => {
+        const checked = point.offers.includes(typeOffer.id) ? 'checked' : '';
+        return     `<div class="event__offer-selector">
      <input class="event__offer-checkbox  visually-hidden" id="event-offer-${typeOffer.title}-1" type="checkbox" name="event-offer-comfort" ${checked}>
        <label class="event__offer-label" for="event-offer-${typeOffer.title}-1">
          <span class="event__offer-title">${typeOffer.title}</span>
           &plus;&euro;&nbsp;
          <span class="event__offer-price">${typeOffer.price}</span>
      </label>
-   </div>`;}).join('');}
+   </div>`;}).join('');
+      textOffer = `<section class="event__section  event__section--offers">
+  <h3 class="event__section-title  event__section-title--offers">Offers</h3>
+    <div class="event__available-offers">
+    ${pointAddOffer}
+  </div>
+</section>`;
+    }
+    return textOffer;
+  };
 
   return (
     `<li class="trip-events__item">
@@ -94,11 +130,9 @@ const createFormPointTemlate = (point) => {
       <label class="event__label  event__type-output" for="event-destination-1">
         ${type}
       </label>
-      <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value=${destination.name} list="destination-list-1">
+      <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" ${textName}">
       <datalist id="destination-list-1">
-        <option value="Amsterdam"></option>
-        <option value="Geneva"></option>
-        <option value="Chamonix"></option>
+        ${optionCities}
       </datalist>
     </div>
 
@@ -125,23 +159,8 @@ const createFormPointTemlate = (point) => {
     </button>
   </header>
   <section class="event__details">
-    <section class="event__section  event__section--offers">
-      <h3 class="event__section-title  event__section-title--offers">Offers</h3>
-      <div class="event__available-offers">
-      ${pointAddOffer}
-    </div>
-  </section>
-
-    <section class="event__section  event__section--destination">
-      <h3 class="event__section-title  event__section-title--destination">Destination</h3>
-      <p class="event__destination-description">${destination.description}</p>
-
-      <div class="event__photos-container">
-        <div class="event__photos-tape">
-         ${pictures}
-        </div>
-      </div>
-     </section>
+  ${headOffer()}
+  ${headDestination()}
     </section>
    </form>
   </li>`

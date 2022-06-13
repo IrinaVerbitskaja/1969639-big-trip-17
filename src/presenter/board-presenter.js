@@ -5,7 +5,6 @@ import NewSortView from '../view/sort-view';
 import PointPresenter from './point-presenter';
 import PointNewPresenter from './point-new-presenter';
 import {filter} from '../util/filter-type';
-//import {updateItem} from '../util/random';
 import {SortType, UpdateType, UserAction, FilterType} from '../util/filter-type';
 import {sortPointPriceDown, sortPointTimeDown, sortPointUp} from '../util/humanday';
 
@@ -13,11 +12,9 @@ export default class BoardPresenter {
   #boardContainer = null;
   #pointModel = null;
   #listView = new ListView();
-  //#sortComponent = new NewSortView();
   #noPointComponent = null;
   #pointNewPresenter = null;
   #currentSortType = SortType.DAY;
-  //#boardPoint = [];
   #pointPresenter = new Map();
   #sortComponent = null;
   #filterModel = null;
@@ -34,11 +31,8 @@ export default class BoardPresenter {
 
   get point() {
     this.#filterType = this.#filterModel.filter;
-    console.log(this.#filterType);
     const points = this.#pointModel.point;
-    console.log(points);
     const filteredPoints = filter[this.#filterType](points);
-    console.log(filteredPoints);
 
     switch (this.#currentSortType) {
       case SortType.TIME:
@@ -52,9 +46,7 @@ export default class BoardPresenter {
     return filteredPoints;
   }
 
-
   init() {
-    //this.#boardPoint = [...this.#pointModel.point];
     this.#renderBoard();
   }
 
@@ -69,17 +61,7 @@ export default class BoardPresenter {
     this.#pointPresenter.forEach((presenter) => presenter.resetView());
   };
 
-  /*#handlePointChange = (updatedPoint) =>{
-    //this.#boardPoint = updateItem(this.#boardPoint, updatedPoint);
-    this.#pointPresenter.get(updatedPoint.id).init(updatedPoint);
-  };*/
-
   #handleViewAction = (actionType, updateType, update) => {
-    console.log(actionType, updateType, update);
-    // Здесь будем вызывать обновление модели.
-    // actionType - действие пользователя, нужно чтобы понять, какой метод модели вызвать
-    // updateType - тип изменений, нужно чтобы понять, что после нужно обновить
-    // update - обновленные данные
     switch (actionType) {
       case UserAction.UPDATE_POINT:
         this.#pointModel.updateTask(updateType, update);
@@ -94,42 +76,21 @@ export default class BoardPresenter {
   };
 
   #handleModelEvent = (updateType, data) => {
-    console.log(updateType, data);
-    // В зависимости от типа изменений решаем, что делать:
-    // - обновить часть списка (например, когда поменялось описание)
-    // - обновить список (например, когда задача ушла в архив)
-    // - обновить всю доску (например, при переключении фильтра)
     switch (updateType) {
       case UpdateType.PATCH:
-        // - обновить часть списка (например, когда поменялось описание)
         this.#pointPresenter.get(data.id).init(data);
         break;
       case UpdateType.MINOR:
-        // - обновить список (например, когда задача ушла в архив)
         this.#clearBoard();
         this.#renderBoard();
         break;
       case UpdateType.MAJOR:
-        // - обновить всю доску (например, при переключении фильтра)
         this.#clearBoard();
         this.#renderBoard();
         break;
     }
   };
 
-  /*#sortPoint = (sortType) => {
-    switch (sortType) {
-      case SortType.TIME:
-        this.#boardPoint.sort(sortPointTimeDown);
-        break;
-      case SortType.PRICE:
-        this.#boardPoint.sort(sortPointPriceDown);
-        break;
-      case SortType.DAY:
-        this.#boardPoint.sort(sortPointUp);
-        break;
-    }
-  };*/
 
   #handleSortTypeChange = (sortType) => {
     if (this.#currentSortType === sortType) {
@@ -137,14 +98,11 @@ export default class BoardPresenter {
     }
 
     this.#currentSortType = sortType;
-    /*this.#clearPointList();
-    this.#renderPoints();*/
     this.#clearBoard();
     this.#renderBoard();
   };
 
   #renderSort = () => {
-    //render(this.#sortComponent, this.#boardContainer, RenderPosition.AFTERBEGIN);
     this.#sortComponent = new NewSortView(this.#currentSortType);
     this.#sortComponent.setSortTypeChangeHandler(this.#handleSortTypeChange);
     render(this.#sortComponent, this.#boardContainer, RenderPosition.AFTERBEGIN);
@@ -157,21 +115,14 @@ export default class BoardPresenter {
   };
 
   #renderPoints = () => {
-    //this.#boardPoint.forEach((point) => this.#renderTripPoint(point));
     this.point.forEach((point) => this.#renderTripPoint(point));
   };
 
   #renderTripPoint = (point) => {
-    //const pointPresenter = new PointPresenter(this.#listView.element, this.#handlePointChange, this.#handleModeChange);
     const pointPresenter = new PointPresenter(this.#listView.element, this.#handleViewAction, this.#handleModeChange);
     pointPresenter.init(point);
     this.#pointPresenter.set(point.id, pointPresenter);
   };
-
-  /*#clearPointList = () => {
-    this.#pointPresenter.forEach((presenter) => presenter.destroy());
-    this.#pointPresenter.clear();
-  };*/
 
   #clearBoard = ({resetSortType = false} = {}) => {
 
@@ -195,17 +146,12 @@ export default class BoardPresenter {
     const pointCount = points.length;
     render(this.#listView, this.#boardContainer);
 
-    //if (this.#boardPoint.every((point) => point.isArchive))
-    //if (this.point.every((point) => point.isArchive))
     if (pointCount === 0){
       this.#renderNoPoints();
       return;
     }
 
     this.#renderSort();
-    //this.#boardPoint.sort(sortPointUp);
-    //this.#renderPoints();
-    //render(this.#listView.element, this.#boardContainer.element);
     this.#renderPoints();
   };
 }
