@@ -11,7 +11,7 @@ const createFormPointTemlate = (point) => {
   const price = isBasePrice ? basePrice : '';
   const dateFromHum = isDateFrom ? humanizeDateAddPoint(dateFrom) : '';
   const dateToHum = isDateTo ? humanizeDateAddPoint(dateTo) : '';
-  //list="destination-list-1
+
   const textName = destination.name ? `value = ${destination.name} list="destination-list-1"` : '';
   const headDestination = () => {
     let textDestination = '';
