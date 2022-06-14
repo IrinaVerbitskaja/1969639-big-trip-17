@@ -130,7 +130,7 @@ const createFormPointTemlate = (point) => {
       <label class="event__label  event__type-output" for="event-destination-1">
         ${type}
       </label>
-      <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" ${textName}>
+      <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" ${textName} autocomplete = "off">
       <datalist id="destination-list-1">
         ${optionCities}
       </datalist>

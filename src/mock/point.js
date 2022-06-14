@@ -64,8 +64,8 @@ const offers = [
 
 const generatePoint = () => ({
   basePrice: getRandomInteger(0, 300),
-  dateFrom: `20${getRandomInteger(19, 22)}-07-0${getRandomInteger(1, 9)}T22:55:56.845Z`,
-  dateTo: `20${getRandomInteger(22, 23)}-07-${getRandomInteger(10, 30)}T11:22:13.375Z`,
+  dateFrom: `2022-07-0${getRandomInteger(1, 9)}T22:55:56.845Z`,
+  dateTo: `2022-07-${getRandomInteger(10, 30)}T11:22:13.375Z`,
   destination: destination,
   id: nanoid(),
   isFavorite: false,
