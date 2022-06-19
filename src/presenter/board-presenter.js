@@ -64,7 +64,7 @@ export default class BoardPresenter {
   #handleViewAction = (actionType, updateType, update) => {
     switch (actionType) {
       case UserAction.UPDATE_POINT:
-        this.#pointModel.updateTask(updateType, update);
+        this.#pointModel.updatePoint(updateType, update);
         break;
       case UserAction.ADD_POINT:
         this.#pointModel.addPoint(updateType, update);

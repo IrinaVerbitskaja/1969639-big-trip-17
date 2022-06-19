@@ -187,7 +187,7 @@ export default class NewFormPointView extends AbstractStatefulView{
 
   setFormSubmitHandler = (callback) => {
     this._callback.formSubmit = callback;
-    this.element.querySelector('.event__save-btn').addEventListener('submit', this.#formSubmitHandler);
+    this.element.querySelector('.event__save-btn').addEventListener('click', this.#formSubmitHandler);
   };
 
   #formSubmitHandler = (evt) => {
@@ -254,7 +254,7 @@ export default class NewFormPointView extends AbstractStatefulView{
     this.element.querySelector('.event__reset-btn').addEventListener('click', this.#formEditHandler);
     this.element.querySelector('[name="event-start-time"]').addEventListener('input', this.#startTimeHandler);
     this.element.querySelector('[name="event-end-time"]').addEventListener('input', this.#endTimeHandler);
-    this.element.querySelector('[id="destination-list-1"]').addEventListener('change', this.#townNameHandler);
+    this.element.querySelector('.event__input--destination').addEventListener('change', this.#townNameHandler);
   };
 
   removeElement = () => {
@@ -304,7 +304,7 @@ export default class NewFormPointView extends AbstractStatefulView{
           enableTime: true,
           'time_24hr': true,
           dateFormat: 'd/m/y H:i',
-          minDate: this._state.dateFrom,
+          minDate: 'today',
           defaultDate: 'today',
           onChange: this.#toDateChangeHandler,
         },
