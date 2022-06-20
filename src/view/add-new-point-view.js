@@ -153,26 +153,23 @@ const createFormPointTemlate = (point) => {
     </div>
 
     <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
-    <button class="event__reset-btn" type="reset">Delete</button>
-    <button class="event__rollup-btn" type="button">
-      <span class="visually-hidden">Open event</span>
-    </button>
+    <button class="event__reset-btn" type="reset">Cancel</button>
   </header>
   <section class="event__details">
-  ${headOffer()}
-  ${headDestination()}
+    ${headOffer()}
+    ${headDestination()}
     </section>
    </form>
   </li>`
   );};
 
-export default class FormPointView extends AbstractStatefulView{
+export default class NewFormPointView extends AbstractStatefulView{
   #datepickerFrom = null;
   #datepickerTo = null;
 
   constructor(point) {
     super();
-    this._state = FormPointView.parsePointToState(point);
+    this._state = NewFormPointView.parsePointToState(point);
     this.#setInnerHandlers();
     this.#setDatepicker();
   }
@@ -195,12 +192,12 @@ export default class FormPointView extends AbstractStatefulView{
 
   #formSubmitHandler = (evt) => {
     evt.preventDefault();
-    this._callback.formSubmit(FormPointView.parseStateToPoint(this._state));
+    this._callback.formSubmit(NewFormPointView.parseStateToPoint(this._state));
   };
 
   setFormEditHandler = (callback) => {
     this._callback.formEdit = callback;
-    this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#formEditHandler);
+    this.element.querySelector('.event__reset-btn').addEventListener('click', this.#formEditHandler);
   };
 
   #formEditHandler = (evt) => {
@@ -254,7 +251,7 @@ export default class FormPointView extends AbstractStatefulView{
   #setInnerHandlers = () => {
     this.element.querySelector('.event__type-group').addEventListener('change', this.#iconChangeHandler);
     this.element.querySelector('.event__input--price').addEventListener('input', this.#priceInputHandler);
-    this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#formEditHandler);
+    this.element.querySelector('.event__reset-btn').addEventListener('click', this.#formEditHandler);
     this.element.querySelector('[name="event-start-time"]').addEventListener('input', this.#startTimeHandler);
     this.element.querySelector('[name="event-end-time"]').addEventListener('input', this.#endTimeHandler);
     this.element.querySelector('.event__input--destination').addEventListener('change', this.#townNameHandler);
@@ -296,7 +293,7 @@ export default class FormPointView extends AbstractStatefulView{
           altInput: true,
           altFormat: 'd/m/y H:i',
           dateFormat: 'Z',
-          defaultDate: this._state.dateFrom,
+          defaultDate:'today',
           onClick: this.#fromDateChangeHandler,
         },
       );
@@ -310,7 +307,7 @@ export default class FormPointView extends AbstractStatefulView{
           altInput: true,
           altFormat: 'd/m/y H:i',
           dateFormat: 'Z',
-          defaultDate: this._state.dateTo,
+          defaultDate: 'today',
           onClick: this.#toDateChangeHandler,
         },
       );
@@ -319,13 +316,13 @@ export default class FormPointView extends AbstractStatefulView{
 
   reset = (point) => {
     this.updateElement(
-      FormPointView.parsePointToState(point),
+      NewFormPointView.parsePointToState(point),
     );
   };
 
   #formDeleteClickHandler = (evt) => {
     evt.preventDefault();
-    this._callback.deleteClick(FormPointView.parseStateToPoint(this._state));
+    this._callback.deleteClick(NewFormPointView.parseStateToPoint(this._state));
   };
 
   static parsePointToState = (point) => ({

@@ -13,6 +13,8 @@ const generateDescription = () => {
   return descriptions[randomIndex];
 };
 
+const cities = ['Berlin', 'Hamburg', 'Munich'];
+
 const generateOfferType = () => {
   const offersPointType = ['taxi', 'bus', 'train', 'ship', 'drive', 'flight', 'check-in', 'sightseeing', 'restaurant'];
   const randomIndex = getRandomInteger(0, offersPointType.length-1);
@@ -21,7 +23,7 @@ const generateOfferType = () => {
 
 const destination = {
   description: generateDescription(),
-  name: 'Geneva',
+  name: 'Berlin',
   pictures: [
     {
       src: `http://picsum.photos/300/200?r=${getRandomInteger(0, 10)}`,
@@ -62,8 +64,8 @@ const offers = [
 
 const generatePoint = () => ({
   basePrice: getRandomInteger(0, 300),
-  dateFrom: `2019-07-0${getRandomInteger(1, 9)}T22:55:56.845Z`,
-  dateTo: `2019-07-${getRandomInteger(10, 30)}T11:22:13.375Z`,
+  dateFrom: `2022-0${getRandomInteger(1, 9)}-0${getRandomInteger(1, 9)}T22:55:56.845Z`,
+  dateTo: `2022-0${getRandomInteger(1, 9)}-${getRandomInteger(10, 30)}T11:22:13.375Z`,
   destination: destination,
   id: nanoid(),
   isFavorite: false,
@@ -71,5 +73,5 @@ const generatePoint = () => ({
   type:generateOfferType(),
 });
 
-export {generatePoint, offers};
+export {generatePoint, offers, destination, generateOfferType, cities};
 
