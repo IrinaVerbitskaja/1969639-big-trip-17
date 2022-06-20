@@ -4,6 +4,7 @@ import {offers} from '../mock/point.js';
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 import {cities} from '../mock/point.js';
+import dayjs from 'dayjs';
 
 const createFormPointTemlate = (point) => {
   const {basePrice, destination, type, dateFrom, dateTo, isBasePrice, isDateFrom, isDateTo} = point;
@@ -278,6 +279,7 @@ export default class FormPointView extends AbstractStatefulView{
     this.updateElement({
       dateFrom: userDate,
     });
+    console.log(userDate);
   };
 
   #toDateChangeHandler = ([userDate]) => {
@@ -286,6 +288,8 @@ export default class FormPointView extends AbstractStatefulView{
     });
   };
 
+  //'d/m/y H:i'
+  //YYYY-MM-DDTHH:mm:ssZ[Z]
   #setDatepicker = () => {
     if (this._state.isDateFrom) {
       this.#datepickerFrom = flatpickr(
@@ -293,10 +297,12 @@ export default class FormPointView extends AbstractStatefulView{
         {
           enableTime: true,
           'time_24hr': true,
-          dateFormat: 'd/m/y H:i',
+          altInput: true,
+          altFormat: 'd/m/y H:i',
+          dateFormat: 'Z',
           minDate: 'today',
           defaultDate: this._state.dateFrom,
-          onChange: this.#fromDateChangeHandler,
+          onClick: this.#fromDateChangeHandler,
         },
       );
     }
@@ -306,10 +312,11 @@ export default class FormPointView extends AbstractStatefulView{
         {
           enableTime: true,
           'time_24hr': true,
-          dateFormat: 'd/m/y H:i',
+          altFormat: 'd/m/y H:i',
+          dateFormat: 'Z',
           minDate: this._state.dateFrom,
           defaultDate: this._state.dateTo,
-          onChange: this.#toDateChangeHandler,
+          onClick: this.#toDateChangeHandler,
         },
       );
     }
@@ -351,6 +358,7 @@ export default class FormPointView extends AbstractStatefulView{
     delete point.isBasePrice;
     delete point.isDateFrom;
     delete point.isDateTo;
+    console.log(point);
 
     return point;
   };
