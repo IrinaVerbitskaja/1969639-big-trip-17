@@ -290,10 +290,11 @@ export default class NewFormPointView extends AbstractStatefulView{
         {
           enableTime: true,
           'time_24hr': true,
-          dateFormat: 'd/m/y H:i',
-          minDate: 'today',
+          altInput: true,
+          altFormat: 'd/m/y H:i',
+          dateFormat: 'Z',
           defaultDate:'today',
-          onChange: this.#fromDateChangeHandler,
+          onClick: this.#fromDateChangeHandler,
         },
       );
     }
@@ -303,10 +304,11 @@ export default class NewFormPointView extends AbstractStatefulView{
         {
           enableTime: true,
           'time_24hr': true,
-          dateFormat: 'd/m/y H:i',
-          minDate: 'today',
+          altInput: true,
+          altFormat: 'd/m/y H:i',
+          dateFormat: 'Z',
           defaultDate: 'today',
-          onChange: this.#toDateChangeHandler,
+          onClick: this.#toDateChangeHandler,
         },
       );
     }

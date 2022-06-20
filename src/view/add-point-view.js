@@ -300,7 +300,6 @@ export default class FormPointView extends AbstractStatefulView{
           altInput: true,
           altFormat: 'd/m/y H:i',
           dateFormat: 'Z',
-          minDate: 'today',
           defaultDate: this._state.dateFrom,
           onClick: this.#fromDateChangeHandler,
         },
@@ -312,9 +311,9 @@ export default class FormPointView extends AbstractStatefulView{
         {
           enableTime: true,
           'time_24hr': true,
+          altInput: true,
           altFormat: 'd/m/y H:i',
           dateFormat: 'Z',
-          minDate: this._state.dateFrom,
           defaultDate: this._state.dateTo,
           onClick: this.#toDateChangeHandler,
         },
