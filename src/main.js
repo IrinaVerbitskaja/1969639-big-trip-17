@@ -6,11 +6,15 @@ import {generateOfferType} from './mock/point';
 import {nanoid} from 'nanoid';
 import {getRandomInteger} from './util/random';
 import {destination} from './mock/point';
+import PointsApiService from './tasks-api-service';
+
+const AUTHORIZATION = 'Basic jfekjoortwjgioi4';
+const END_POINT = 'https://17.ecmascript.pages.academy/big-trip';
 
 const tripMain = document.querySelector('.trip-main');
 const filterElement = tripMain.querySelector('.trip-controls__filters');
 const sortContentElement = document.querySelector('.trip-events');
-const pointModel = new PointModel();
+const pointModel = new PointModel(new PointsApiService(END_POINT, AUTHORIZATION));
 const filterModel = new FilterModel();
 
 const newPoint =  {

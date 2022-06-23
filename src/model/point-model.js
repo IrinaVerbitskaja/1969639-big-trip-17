@@ -2,7 +2,19 @@ import Observable from '../framework/observable.js';
 import {generatePoint} from '../mock/point';
 
 export default class PointModel extends Observable {
+  #pointsApiService = null;
   #points = Array.from({length: 3}, generatePoint);
+
+  constructor(pointsApiService) {
+    super();
+    this.#pointsApiService = pointsApiService;
+
+    this.#pointsApiService.points.then((points) => {
+      //console.log('Исходный массив', points);
+      console.log('Адаптированный массив', points.map(this.#adaptToClient));
+    });
+  }
+
   get point () {
     return this.#points;}
 
@@ -44,5 +56,21 @@ export default class PointModel extends Observable {
     ];
 
     this._notify(updateType);
+  };
+
+  #adaptToClient = (point) => {
+    const adaptedPoint = {...point,
+      basePrice: point['base_price'],
+      dateFrom: point['date_from'] !== null ? new Date(point['date_from']) : point['date_from'],
+      dateTo: point['date_to'] !== null ? new Date(point['date_to']) : point['date_to'],
+      isFavorite: point['is_favorite'],
+    };
+
+    delete adaptedPoint['base_price'];
+    delete adaptedPoint['date_from'];
+    delete adaptedPoint['date_to'];
+    delete adaptedPoint['is_favorite'];
+
+    return adaptedPoint;
   };
 }
