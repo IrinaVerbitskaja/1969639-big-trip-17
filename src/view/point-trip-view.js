@@ -1,5 +1,5 @@
 import AbstractView from '../framework/view/abstract-view';
-import {offers} from '../mock/point';
+//import {offers} from '../mock/point';
 import {humanizeData, humanizeClassData, humanizeTime, humanizeDataFromClass, humanizeDifference} from '../util/humanday.js';
 
 const DIFF_SECOND = 60;

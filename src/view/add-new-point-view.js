@@ -1,9 +1,9 @@
 import AbstractStatefulView from '../framework/view/abstract-stateful-view';
 import {humanizeDateAddPoint} from '../util/humanday.js';
-import {offers} from '../mock/point.js';
+//import {offers} from '../mock/point.js';
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
-import {cities} from '../mock/point.js';
+//import {cities} from '../mock/point.js';
 
 const createFormPointTemlate = (point) => {
   const {basePrice, destination, type, dateFrom, dateTo, isBasePrice, isDateFrom, isDateTo} = point;

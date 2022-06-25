@@ -1,22 +1,35 @@
 import Observable from '../framework/observable.js';
-import {generatePoint} from '../mock/point';
+import {UpdateType} from '../util/filter-type.js';
 
 export default class PointModel extends Observable {
   #pointsApiService = null;
-  #points = Array.from({length: 3}, generatePoint);
+  //#points = Array.from({length: 3}, generatePoint);
+  #points = [];
 
   constructor(pointsApiService) {
     super();
     this.#pointsApiService = pointsApiService;
 
-    this.#pointsApiService.points.then((points) => {
+    /*this.#pointsApiService.points.then((points) => {
       //console.log('Исходный массив', points);
       console.log('Адаптированный массив', points.map(this.#adaptToClient));
-    });
+    });*/
   }
 
   get point () {
-    return this.#points;}
+    return this.#points;
+  }
+
+  init = async () => {
+    try {
+      const points = await this.#pointsApiService.points;
+      this.#points = points.map(this.#adaptToClient);
+      console.log(this.#points);
+    } catch(err) {
+      this.#points = [];
+    }
+    this._notify(UpdateType.INIT);
+  };
 
   updatePoint = (updateType, update) => {
     const index = this.#points.findIndex((point) => point.id === update.id);
