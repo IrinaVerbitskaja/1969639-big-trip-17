@@ -4,11 +4,9 @@ import {humanizeDateAddPoint} from '../util/humanday.js';
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 //import {cities} from '../mock/point.js';
-import DestinationApiService from '../destination-api';
+//import DestinationApiService from '../destination-api';
 import {destinationApi} from '../main';
 
-let towtn = DestinationApiService.destination;
-console.log (towtn);
 
 const createFormPointTemlate = (point) => {
   const {basePrice, destination, type, dateFrom, dateTo, isBasePrice, isDateFrom, isDateTo} = point;
