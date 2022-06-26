@@ -1,13 +1,13 @@
-import AbstractView from "../framework/view/abstract-view";
+import AbstractView from '../framework/view/abstract-view';
 
-const createNoTaskTemplate = () => (
-  `<p class="board__no-tasks">
+const createNoPointTemplate = () => (
+  `<p class="board__no-points">
     Loading...
   </p>`
 );
 
 export default class LoadingView extends AbstractView {
   get template() {
-    return createNoTaskTemplate();
+    return createNoPointTemplate();
   }
 }

@@ -1,6 +1,7 @@
 import {render, RenderPosition, remove} from '../framework/render';
 import ListView from '../view/list-view';
 import NoPointView from '../view/no-point-view';
+import LoadingView from '../view/loading-view';
 import NewSortView from '../view/sort-view';
 import PointPresenter from './point-presenter';
 import PointNewPresenter from './point-new-presenter';
@@ -12,6 +13,7 @@ export default class BoardPresenter {
   #boardContainer = null;
   #pointModel = null;
   #listView = new ListView();
+  #loadingComponent = new LoadingView();
   #noPointComponent = null;
   #pointNewPresenter = null;
   #currentSortType = SortType.DAY;
@@ -19,6 +21,7 @@ export default class BoardPresenter {
   #sortComponent = null;
   #filterModel = null;
   #filterType = FilterType.EVERYTHING;
+  #isLoading = true;
 
   constructor(boardContainer, pointModel, filterModel) {
     this.#boardContainer = boardContainer;
@@ -88,6 +91,11 @@ export default class BoardPresenter {
         this.#clearBoard();
         this.#renderBoard();
         break;
+      case UpdateType.INIT:
+        this.#isLoading = false;
+        remove(this.#loadingComponent);
+        this.#renderBoard();
+        break;
     }
   };
 
@@ -106,6 +114,10 @@ export default class BoardPresenter {
     this.#sortComponent = new NewSortView(this.#currentSortType);
     this.#sortComponent.setSortTypeChangeHandler(this.#handleSortTypeChange);
     render(this.#sortComponent, this.#boardContainer, RenderPosition.AFTERBEGIN);
+  };
+
+  #renderLoading = () => {
+    render(this.#loadingComponent, this.#boardContainer, RenderPosition.AFTERBEGIN);
   };
 
   #renderNoPoints = () => {
@@ -131,6 +143,7 @@ export default class BoardPresenter {
     this.#pointPresenter.clear();
 
     remove(this.#sortComponent);
+    remove(this.#loadingComponent);
 
     if (this.#noPointComponent) {
       remove(this.#noPointComponent);
@@ -142,9 +155,15 @@ export default class BoardPresenter {
   };
 
   #renderBoard = () => {
+    render(this.#listView, this.#boardContainer);
+
+    if (this.#isLoading) {
+      this.#renderLoading();
+      return;
+    }
     const points = this.point;
     const pointCount = points.length;
-    render(this.#listView, this.#boardContainer);
+    //render(this.#listView, this.#boardContainer);
 
     if (pointCount === 0){
       this.#renderNoPoints();

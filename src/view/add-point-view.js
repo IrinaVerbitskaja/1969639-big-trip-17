@@ -4,6 +4,11 @@ import {humanizeDateAddPoint} from '../util/humanday.js';
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 //import {cities} from '../mock/point.js';
+import DestinationApiService from '../destination-api';
+import {destinationApi} from '../main';
+
+let towtn = DestinationApiService.destination;
+console.log (towtn);
 
 const createFormPointTemlate = (point) => {
   const {basePrice, destination, type, dateFrom, dateTo, isBasePrice, isDateFrom, isDateTo} = point;
@@ -36,7 +41,8 @@ const createFormPointTemlate = (point) => {
     return textDestination;
   };
 
-  const optionCities = cities.map((city) => `<option value=${city}></option>`).join('');
+  //const cities = Object.assign({}, destinationApi);
+  const optionCities = destinationApi.map((city) =>`<option value=${city.name}></option>`).join('');
 
   const pointTypeOffer = offers.find((offer) => offer.type === type);
   let pointAddOffer = [];

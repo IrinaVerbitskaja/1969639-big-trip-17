@@ -7,6 +7,7 @@ import {nanoid} from 'nanoid';
 import {getRandomInteger} from './util/random';
 // {destination} from './mock/point';
 import PointsApiService from './tasks-api-service';
+import DestinationApiService from './destination-api';
 
 const AUTHORIZATION = 'Basic jfekjoortwjgioi4';
 const END_POINT = 'https://17.ecmascript.pages.academy/big-trip';
@@ -16,6 +17,9 @@ const filterElement = tripMain.querySelector('.trip-controls__filters');
 const sortContentElement = document.querySelector('.trip-events');
 const pointModel = new PointModel(new PointsApiService(END_POINT, AUTHORIZATION));
 const filterModel = new FilterModel();
+const destinationServer = new DestinationApiService(END_POINT, AUTHORIZATION);
+const destinationApi = destinationServer.destination;
+console.log(destinationApi);
 
 const newPoint =  {
   basePrice: null,
@@ -46,4 +50,4 @@ filterPresenter.init();
 boardPresenter.init();
 pointModel.init();
 
-
+export {destinationApi};
