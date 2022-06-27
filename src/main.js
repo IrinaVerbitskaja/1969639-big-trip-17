@@ -18,8 +18,20 @@ const sortContentElement = document.querySelector('.trip-events');
 const pointModel = new PointModel(new PointsApiService(END_POINT, AUTHORIZATION));
 const filterModel = new FilterModel();
 const destinationServer = new DestinationApiService(END_POINT, AUTHORIZATION);
-const destinationApi = destinationServer.destination;
-console.log(destinationApi);
+
+let dest;
+const destinationServApi = async () => {
+  try {
+    const destinationsName = await destinationServer.destination;
+    console.log('в функции', destinationsName);
+    dest = destinationsName;
+    console.log ('dest', dest);
+  } catch(err) {
+    console.log(err);
+  }
+  return dest;
+};
+
 
 const newPoint =  {
   basePrice: null,
@@ -45,9 +57,12 @@ const handleNewTaskButtonClick = () => {
 };
 
 document.querySelector('.trip-main__event-add-btn').addEventListener('click', handleNewTaskButtonClick);
+destinationServApi();
+console.log('просто', dest);
+
 
 filterPresenter.init();
 boardPresenter.init();
 pointModel.init();
 
-export {destinationApi};
+export {dest};

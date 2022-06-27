@@ -5,8 +5,8 @@ import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 //import {cities} from '../mock/point.js';
 //import DestinationApiService from '../destination-api';
-import {destinationApi} from '../main';
-
+//import {dest} from '../main';
+//console.log('во вью', dest);
 
 const createFormPointTemlate = (point) => {
   const {basePrice, destination, type, dateFrom, dateTo, isBasePrice, isDateFrom, isDateTo} = point;
